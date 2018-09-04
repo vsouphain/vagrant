@@ -36,9 +36,21 @@ sudo systemctl start docker
 
 
 # set develop user
-#sudo groupadd develop
-#sudo adduser develop -g develop
-#sudo usermod -aG develop develop
-#sudo sh -c 'echo "%develop ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/develop'
-sudo chmod +x /vagrant/user.sh && /vagrant/user.sh
+user="develop"
+password="123456"
+sudo groupadd $user
+sudo adduser $user -g $user
+sudo sh -c "echo '%$user ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/$user"
+
+expect << EOF
+spawn sudo passwd $user
+expect "New password:"
+send "${password}\r"
+expect "Retype new password:"
+send "${password}\r"
+expect eof;
+EOF
+
+sudo mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bk
+sudo cp /vagrant/sshd_config /etc/ssh/sshd_config
 sudo systemctl restart sshd
