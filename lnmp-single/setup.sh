@@ -85,7 +85,7 @@ sudo tar zxvf nghttp2-1.33.0.tar.gz && cd nghttp2-1.33.0/ && sudo ./configure &&
 # install swoole devel
 sudo yum install -y pcre-devel glibc-headers gcc-c++ openssl-devel
 sudo wget https://github.com/swoole/swoole-src/archive/v4.1.2.tar.gz
-sudo tar zxvf v4.1.2.tar.gz && cd swoole-src-4.1.2 
+sudo tar zxvf v4.1.2.tar.gz && cd swoole-src-4.1.2 && sudo phpize
 sudo ./configure  --enable-openssl --enable-http2 --enable-async-redis --enable-sockets --enable-mysqlnd && sudo make && sudo make install && cd ..
 sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf' && sudo ldconfig
 sudo sh -c 'echo "extension=swoole.so" > /etc/php.d/swoole.ini'
