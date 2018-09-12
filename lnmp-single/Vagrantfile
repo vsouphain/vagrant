@@ -5,10 +5,11 @@ Vagrant.require_version ">= 1.6.0"
 
 boxes = [
     {
-        :name => "lnmp",
-        :eth1 => "192.168.1.91",
-        :mem => "1024",
-        :cpu => "1"
+        :name => "YxServer",
+        :eth1 => "192.168.88.20",
+        :mem => "4096",
+        :cpu => "2",
+        :port => 1213
     }
 ]
 
@@ -29,6 +30,18 @@ Vagrant.configure(2) do |config|
           v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
         end
 		
+        config.vm.network "forwarded_port", guest: 80, host: opts[:port]
+        config.vm.network "forwarded_port", guest: 9900, host: 9900
+        config.vm.network "forwarded_port", guest: 9901, host: 9901
+        config.vm.network "forwarded_port", guest: 9902, host: 9902
+        config.vm.network "forwarded_port", guest: 9903, host: 9903
+        config.vm.network "forwarded_port", guest: 9904, host: 9904
+        config.vm.network "forwarded_port", guest: 9905, host: 9905
+        config.vm.network "forwarded_port", guest: 9906, host: 9906
+        config.vm.network "forwarded_port", guest: 9907, host: 9907
+        config.vm.network "forwarded_port", guest: 9908, host: 9908
+        config.vm.network "forwarded_port", guest: 9909, host: 9909
+        config.vm.network "forwarded_port", guest: 9910, host: 9910
 		config.vm.network "private_network", ip: opts[:eth1]
       end
   end
