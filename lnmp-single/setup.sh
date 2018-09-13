@@ -114,6 +114,16 @@ sudo systemctl enable php-fpm
 sudo systemctl enable nginx
 sudo systemctl enable docker
 
+#优化系统内核参数
+sudo sed -i '/^#DefaultLimitNOFILE=/aDefaultLimitNOFILE=655350' /etc/systemd/system.conf 
+sudo sed -i '/^#DefaultLimitNPROC=/aDefaultLimitNPROC=655350' /etc/systemd/system.conf
+sudo sed -i "s/4096/655350/g"  /etc/security/limits.d/20-nproc.conf
+sudo sh -c 'cat /vagrant/limits.conf >> /etc/security/limits.conf'
+sudo sh -c 'cat /vagrant/sysctl.conf >> /etc/sysctl.conf'
+sudo sysctl -p
+
+echo "安装完成，请在git bash下再次执行vagrant halt && vagrant up命令，进行重启生效"
+
 sudo halt
 
 
