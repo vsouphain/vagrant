@@ -50,24 +50,14 @@ sudo sh -c "echo 'LANG=\"zh_CN.UTF-8\"' > /etc/locale.conf"
 
 #install java jdk development
 sudo yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
-sudo sh -c 'echo "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk" >> /etc/profile'
-sudo sh -c 'echo "export JRE_HOME=${JAVA_HOME}/jre" >> /etc/profile'
-sudo sh -c 'echo "export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib:$JRE_HOME/lib/rt.jar:$JAVA_HOME/lib/tools.jar" >> /etc/profile'
-sudo sh -c 'echo "export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile'
-sudo sh -c 'echo "export TIME_STYLE=\"+%Y/%m/%d %H:%M:%S\"" >> /etc/profile'
-sudo source /etc/profile
+sudo sh -c 'cat /vagrant/profile >> /etc/profile' && sudo source /etc/profile
 
 # install docker
 sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 sudo yum-config-manager -y --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce
-
 # sudo sh -c 'echo "{\"registry-mirrors\": [\"https://registry.docker-cn.com\"]}" > /etc/docker/daemon.json'
-
-# start docker service
-sudo groupadd docker
-sudo usermod -aG docker vagrant
 
 # install php 7.x
 sudo yum install -y epel-release
@@ -92,7 +82,7 @@ sudo sh -c 'echo "extension=swoole.so" > /etc/php.d/swoole.ini'
 
 # install nginx
 sudo yum install -y nginx
-sudo sh -c 'echo "docker-node2" >  /usr/share/nginx/html/index.html'
+sudo sh -c 'echo "Welcome to Nginx" >  /usr/share/nginx/html/index.html'
 
 #create web user www
 sudo groupadd www
@@ -113,6 +103,16 @@ sudo sed -i "s/SELINUX=enforcing/SELINUX=disabled/g"  /etc/selinux/config
 sudo systemctl enable php-fpm
 sudo systemctl enable nginx
 sudo systemctl enable docker
+
+#优化系统内核参数
+sudo sed -i '/^#DefaultLimitNOFILE=/aDefaultLimitNOFILE=655350' /etc/systemd/system.conf 
+sudo sed -i '/^#DefaultLimitNPROC=/aDefaultLimitNPROC=655350' /etc/systemd/system.conf
+sudo sed -i "s/4096/655350/g"  /etc/security/limits.d/20-nproc.conf
+sudo sh -c 'cat /vagrant/limits.conf >> /etc/security/limits.conf'
+sudo sh -c 'cat /vagrant/sysctl.conf >> /etc/sysctl.conf'
+sudo sysctl -p
+
+echo "安装完成，请在git bash下再次执行vagrant halt && vagrant up命令，进行重启生效"
 
 sudo halt
 
