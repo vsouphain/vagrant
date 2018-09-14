@@ -64,6 +64,10 @@ sudo yum install -y epel-release
 sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 sudo yum install -y --skip-broken mod_php71w php71w-*
 
+# install composer
+sudo curl -sS https://getcomposer.org/installer | php
+sudo cp composer.phar /usr/bin/composer
+
 # install hiredis
 sudo wget https://github.com/redis/hiredis/archive/v0.13.3.tar.gz
 sudo tar xzvf v0.13.3.tar.gz && cd hiredis-0.13.3/ && sudo make -j && sudo make install && sudo ldconfig && cd ..
