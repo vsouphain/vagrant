@@ -64,10 +64,6 @@ sudo yum install -y epel-release
 sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 sudo yum install -y --skip-broken mod_php71w php71w-*
 
-# install composer
-sudo curl -sS https://getcomposer.org/installer | php
-sudo cp composer.phar /usr/bin/composer
-
 # install hiredis
 sudo wget https://github.com/redis/hiredis/archive/v0.13.3.tar.gz
 sudo tar xzvf v0.13.3.tar.gz && cd hiredis-0.13.3/ && sudo make -j && sudo make install && sudo ldconfig && cd ..
@@ -78,8 +74,8 @@ sudo tar zxvf nghttp2-1.33.0.tar.gz && cd nghttp2-1.33.0/ && sudo ./configure &&
 
 # install swoole devel
 sudo yum install -y pcre-devel glibc-headers gcc-c++ openssl-devel
-sudo wget https://github.com/swoole/swoole-src/archive/v4.1.2.tar.gz
-sudo tar zxvf v4.1.2.tar.gz && cd swoole-src-4.1.2 && sudo phpize
+sudo wget https://github.com/swoole/swoole-src/archive/v4.2.1.tar.gz
+sudo tar zxvf v4.2.1.tar.gz && cd swoole-src-4.2.1 && sudo phpize
 sudo ./configure  --enable-openssl --enable-http2 --enable-async-redis --enable-sockets --enable-mysqlnd && sudo make && sudo make install && cd ..
 sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf' && sudo ldconfig
 sudo sh -c 'echo "extension=swoole.so" > /etc/php.d/swoole.ini'
