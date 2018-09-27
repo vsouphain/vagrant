@@ -100,9 +100,8 @@ sudo sed -i "s/;listen.owner = nobody/listen.owner = www/g"  /etc/php-fpm.d/www.
 sudo setenforce 0
 sudo sed -i "s/SELINUX=enforcing/SELINUX=disabled/g"  /etc/selinux/config
 
-sudo systemctl enable php-fpm
-sudo systemctl enable nginx
-sudo systemctl enable docker
+#共享文件夹开机挂载
+sudo sh -c 'echo "/data                                    /data          vboxsf  defaults        0 0" >>  /etc/fstab'
 
 #优化系统内核参数
 sudo sed -i '/^#DefaultLimitNOFILE=/aDefaultLimitNOFILE=655350' /etc/systemd/system.conf 
@@ -111,6 +110,10 @@ sudo sed -i "s/4096/655350/g"  /etc/security/limits.d/20-nproc.conf
 sudo sh -c 'cat /vagrant/limits.conf >> /etc/security/limits.conf'
 sudo sh -c 'cat /vagrant/sysctl.conf >> /etc/sysctl.conf'
 sudo sysctl -p
+
+sudo systemctl enable php-fpm
+sudo systemctl enable nginx
+sudo systemctl enable docker
 
 echo "安装完成，请在git bash下再次执行vagrant halt && vagrant up命令，进行重启生效"
 
