@@ -90,6 +90,7 @@ sudo useradd www -g www
 
 sudo sed -i "s/user nginx/user www/g"  /etc/nginx/nginx.conf
 sudo \cp /vagrant/default.conf /etc/nginx/conf.d/default.conf
+sudo chown www.www -R /var/lib/nginx
 
 sudo sed -i "s/user = apache/user = www/g"  /etc/php-fpm.d/www.conf
 sudo sed -i "s/group = apache/group = www/g"  /etc/php-fpm.d/www.conf
