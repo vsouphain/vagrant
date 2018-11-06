@@ -1,7 +1,7 @@
 #/bin/sh
 
 # install some tools
-sudo yum install -y git wget curl vim gcc glibc-static telnet bridge-utils net-tools lrzsz zip unzip kde-l10n-Chinese
+sudo yum install -y git wget curl vim gcc glibc-static telnet bridge-utils net-tools lrzsz zip unzip kde-l10n-Chinese ntp
 
 # set aliyun yum source
 sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
@@ -20,6 +20,13 @@ sudo sh -c 'echo "151.101.72.133 assets-cdn.github.com" >>  /etc/hosts'
 sudo sh -c 'echo "185.31.18.133 avatars0.githubusercontent.com" >>  /etc/hosts'
 sudo sh -c 'echo "185.31.19.133 avatars1.githubusercontent.com" >>  /etc/hosts'
 sudo sh -c 'echo "52.206.76.142 collector.githubapp.com" >>  /etc/hosts'
+
+# sync time
+sudo systemctl enable ntpd
+sudo systemctl start ntpd
+sudo timedatectl set-timezone Asia/Shanghai
+sudo timedatectl set-ntp yes
+sudo ntpq -p
 
 # set develop user
 sudo yum install -y tcl tcl-devel expect
