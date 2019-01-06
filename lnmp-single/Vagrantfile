@@ -6,9 +6,9 @@ Vagrant.require_version ">= 1.6.0"
 boxes = [
     {
         :name => "YxServer",
-        :eth1 => "192.168.88.20",
-        :mem => "4096",
-        :cpu => "2",
+        :eth1 => "192.168.88.19",
+        :mem => "8196",
+        :cpu => "4",
         :port => 1213
     }
 ]
@@ -46,7 +46,7 @@ Vagrant.configure(2) do |config|
       end
   end
 
-  config.vm.synced_folder "D:/vagrant-share", "/data"
+  config.vm.synced_folder "D:/study", "/data"
   config.vm.provision "shell", privileged: true, path: "./setup.sh"
 
 end

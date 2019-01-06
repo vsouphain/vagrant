@@ -1,7 +1,10 @@
 #/bin/sh
 
 # install some tools
-sudo yum install -y git wget curl vim gcc glibc-static telnet bridge-utils net-tools lrzsz zip unzip kde-l10n-Chinese ntp
+sudo yum install -y git wget curl vim gcc glibc-static telnet bridge-utils net-tools lrzsz zip unzip kde-l10n-Chinese ntp bash-completion
+
+#auto completion
+sudo source /usr/share/bash-completion/bash_completion
 
 # set aliyun yum source
 sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
@@ -69,7 +72,7 @@ sudo yum install -y docker-ce
 # install php 7.x
 sudo yum install -y epel-release
 sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-sudo yum install -y --skip-broken mod_php71w php71w-*
+sudo yum install -y --skip-broken mod_php72w php72w-*
 
 # install hiredis
 sudo wget https://github.com/redis/hiredis/archive/v0.13.3.tar.gz
@@ -81,8 +84,8 @@ sudo tar zxvf nghttp2-1.33.0.tar.gz && cd nghttp2-1.33.0/ && sudo ./configure &&
 
 # install swoole devel
 sudo yum install -y pcre-devel glibc-headers gcc-c++ openssl-devel
-sudo wget https://github.com/swoole/swoole-src/archive/v4.2.1.tar.gz
-sudo tar zxvf v4.2.1.tar.gz && cd swoole-src-4.2.1 && sudo phpize
+sudo wget https://github.com/swoole/swoole-src/archive/v4.2.11.tar.gz
+sudo tar zxvf v4.2.11.tar.gz && cd swoole-src-4.2.11 && sudo phpize
 sudo ./configure  --enable-openssl --enable-http2 --enable-async-redis --enable-sockets --enable-mysqlnd && sudo make && sudo make install && cd ..
 sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf' && sudo ldconfig
 sudo sh -c 'echo "extension=swoole.so" > /etc/php.d/swoole.ini'
